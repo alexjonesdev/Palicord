@@ -1,3 +1,7 @@
+# Custom Files
+*.token
+bot/log/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
