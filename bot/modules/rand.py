@@ -2,6 +2,10 @@
 import random
 from discord.ext import commands
 
+#---==CONFIG==---
+MAX_ROLLS = 10
+MAX_DIE = 100
+
 #---==COMMANDS==---
 class rand(commands.Cog):
     def __init__(self, bot):
@@ -31,11 +35,15 @@ class rand(commands.Cog):
             await ctx.send('Format has to be in NdN!')
             return
 
-        if 1 <= rolls <= 100 and 1 <= limit <= 100:
-            result = ', '.join(str(random.randint(1, limit)) for r in range(rolls))
-            await ctx.send(result)
+        if 1 <= rolls <= MAX_ROLLS and 1 <= limit <= MAX_DIE:
+            roll_results = []
+            for r in range(rolls):
+                roll_results.append(random.randint(1, limit))
+
+            num_list = ', '.join(str(r) for r in roll_results)
+            await ctx.send(f'{sum(roll_results)} = {num_list}')
         else:
-            await ctx.send('Stop that!')
+            await ctx.send(f'The max number of dice that can be rolled is {MAX_ROLLS} and the max number of sides a die can have is {MAX_DIE}.')
 
 async def setup(bot):
     await bot.add_cog(rand(bot))
